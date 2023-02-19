@@ -17,8 +17,6 @@ class Sensor(ABC):
     def __init__(self, id: str, location: str) -> None:
         self.__id = id
         self.__location = location
-        # self.__input_pin = input_pin
-        # self.__output_pin = output_pin
 
     def printLocation(self) -> None:
         print("Location: " + self.__location)

@@ -1,33 +1,20 @@
 from multi_sensor import MultiSensor
 from segment_display import SegmentDisplay
 
-# create a multi-sensor instance
-sensor1 = MultiSensor(1, "Lahti")
-sensor2 = MultiSensor(2, "Lappeenranta")
-
-# create two segment display instances
-display1 = SegmentDisplay()
-display2 = SegmentDisplay()
-
-# connect the multi-sensor and segment displays
-sensor1.connect_display(display1)
-sensor1.connect_display(display2)
-
-# boot up message
 print("Vending machine booting...")
 
-# group of components with one multi-sensor and two segment displays
-component_group = [sensor1, display1, display2]
+multiSensor = MultiSensor(1, "internal")
+display1 = SegmentDisplay(1, 2, 9600)
+display2 = SegmentDisplay(3, 4, 9600)
 
-# print out component group information
+temp = multiSensor.t_sensor.readRaw()
+hum = multiSensor.h_sensor.readRaw()
+print()
 print("Component group: 1")
-print("Location: internal")
+multiSensor.printLocation()
+print(f"Measurements - Temp: {temp:.2f} C, Hum: {hum:.2f} %")
 
-# read the humidity value from the sensor and display it twice
-humidity = sensor1.readRaw()
-print("Measurements - Temp: {:.2f} C, {:.2f} %".format(sensor1.readRaw(), humidity))
-display1.show_value(humidity)
-display2.show_value(humidity)
-
-# shutdown message
+display1.showOnDisplay(str(bin(int(temp))))
+display2.showOnDisplay(str(bin(int(hum%10))))
+print()
 print("Vending machine shutting down.")
