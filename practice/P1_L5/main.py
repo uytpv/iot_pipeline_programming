@@ -1,4 +1,3 @@
-import configparser
 from main_menu import MainMenu
 
 
@@ -8,6 +7,7 @@ class Main:
     def __init__(self) -> None:
         # 1- init
         main_menu = MainMenu()
+        create_product_statement
         # 2- run
         main_menu.showMenu()
         # 3- clean

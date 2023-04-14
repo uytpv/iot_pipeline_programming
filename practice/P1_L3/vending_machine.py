@@ -30,27 +30,14 @@ class VendingMachine:
         c_coin_pouch = self.config.getint('Coins', 'coin_pouch')
         c_coin_inserted = self.config.getint('Coins', 'inserted_coins')
 
-        self.config.set('Coins', 'coin_pouch', str(
-            c_coin_pouch + c_coin_inserted))
-        self.config.set('Coins', 'inserted_coins', str(0))
+        self.config.set('Coins', 'coin_pouch', str(c_coin_pouch + self.coins))
+        self.config.set('Coins', 'inserted_coins',
+                        str(c_coin_inserted - self.coins))
 
         with open('config.ini', 'w') as configfile:
             self.config.write(configfile)
         self.play_sound('./coin_land.wav')
         print()
-
-    def buyProduct(self, price) -> bool:
-        self.config.read('config.ini')
-        c_coin_inserted = self.config.getint('Coins', 'inserted_coins')
-        if (int(price) > c_coin_inserted):
-            print('Not enough coins! Insert more.')
-            return False
-        else:
-            self.config.set('Coins', 'inserted_coins',
-                            str(c_coin_inserted - int(price)))
-            with open('config.ini', 'w') as configfile:
-                self.config.write(configfile)
-            return True
 
     def play_sound(self, filename):
         wave_obj = sa.WaveObject.from_wave_file(filename)
